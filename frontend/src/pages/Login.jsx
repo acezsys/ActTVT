@@ -55,8 +55,7 @@ export default function Login() {
 
         <Link to="/forgot-password" className="auth-link">Forgot password?</Link>
         <Link to="https://www.prowessz.com" className="auth-link">Prowessz Consulting Services LLP</Link>
-        
-      </form>
+        </form>
     </div>
   );
 }
