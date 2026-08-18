@@ -32,8 +32,8 @@ export default function Login() {
   return (
     <div className="auth-screen">
       <form className="auth-card" onSubmit={handleSubmit}>
-        <h1>Order Management</h1>
-        <p className="auth-subtitle">Arieckal Industries</p>
+        <h1>ERM by Prowessz Consulting</h1>
+        <p className="auth-subtitle">For Arieckal Industries</p>
 
         <label className="field">
           <span className="field-label">Email</span>
