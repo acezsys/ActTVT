@@ -54,6 +54,7 @@ export default function Login() {
         </button>
 
         <Link to="/forgot-password" className="auth-link">Forgot password?</Link>
+        <p className="auth-subtitle">Prowessz Consulting Services LLP</p>
       </form>
     </div>
   );
