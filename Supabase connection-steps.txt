@@ -1,0 +1,21 @@
+1
+Create a Supabase account and project
+Go to supabase.com and click 'Start your project'. Sign up (Google sign-in is easiest). Click 'New Project', give it a name like 'arieckal-erp', set a strong database password (write this down somewhere safe — you'll need it once), choose the region closest to India (e.g. Mumbai/ap-south-1 if available), and click 'Create new project'. Wait 1-2 minutes for it to finish setting up.
+2
+Open the Connect screen
+Once the project is ready, look for a 'Connect' button near the top of the page (sometimes it's a small database/plug icon). Click it — this opens a panel with several tabs at the top.
+3
+Choose 'Direct connection' (skip Framework/ORM/MCP tabs)
+In the tabs shown, click the one labelled 'Direct connection' (it may also show 'Connection string'). Ignore any tabs called Frameworks, ORMs, or MCP — those aren't for us. If it asks you to pick a framework or variant first, look for a 'Skip' link, or just navigate straight to Project Settings → Database instead.
+4
+Switch to 'Session pooler' mode
+On the connection string screen, there are usually a couple of modes: 'Direct connection', 'Session pooler', and 'Transaction pooler'. Choose 'Session pooler' — our system runs as one continuously-running server (not the type of app that needs 'Transaction pooler'), and Session pooler is the more reliable, stable choice for that.
+5
+Copy the connection string
+You'll see a line that looks like: postgresql://postgres.xxxxx:[YOUR-PASSWORD]@aws-0-ap-south-1.pooler.supabase.com:5432/postgres — click the copy icon next to it. It will have a placeholder like [YOUR-PASSWORD] in it.
+6
+Replace the placeholder with your real password
+In the copied text, replace [YOUR-PASSWORD] with the actual database password you set in Step 1 (not your Supabase login password — the database one). This full string, with the real password in it, is your DATABASE_URL.
+7
+Paste it into the setup script
+When you run the installer (node scripts/install.js) as described earlier, it will ask 'Database connection URL' — paste this string in there. That's the only place it's needed.
