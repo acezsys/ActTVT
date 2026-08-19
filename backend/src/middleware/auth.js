@@ -55,4 +55,17 @@ function requireModuleAccess(moduleName) {
   };
 }
 
-module.exports = { requireAuth, requireRole, requireModuleAccess };
+// Blocks a module entirely — including for Superadmin — when the Creator has
+// switched it off for this deployment. Returns 404 (not 403) so a disabled
+// module looks like it doesn't exist rather than "exists but blocked".
+function requireModuleEnabled(moduleName) {
+  return async (req, res, next) => {
+    const { rows } = await pool.query('SELECT is_enabled FROM module_settings WHERE module = $1', [moduleName]);
+    if (rows.length && rows[0].is_enabled === false) {
+      return res.status(404).json({ error: 'Not found.' });
+    }
+    next();
+  };
+}
+
+module.exports = { requireAuth, requireRole, requireModuleAccess, requireModuleEnabled };
