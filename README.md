@@ -75,6 +75,24 @@ share those directly the first time.)
 
 ---
 
+## Creator access (module on/off control)
+
+The install script generates a private link, printed once at the end of
+setup:
+
+```
+<your app URL>/creator-panel/<a long random key>
+```
+
+This link controls which of the 8 optional modules exist in the system —
+independent of Superadmin, and not visible or reachable from Superadmin's
+account by any path. **Save that link somewhere private when the installer
+prints it — it cannot be recovered from within the app afterward.** If lost,
+a new key can be set by editing `CREATOR_ACCESS_KEY` in the environment
+variables (Render → Environment tab) and restarting the service.
+
+---
+
 ## Project structure
 
 ```
@@ -86,7 +104,10 @@ order_management_erp_architecture.md — full requirements & design spec
 ```
 
 ## What's next
-Tender/Bid, Sales/Work Order, Purchase, Stores, Production, Dispatch/Accounts,
-and the Dashboard modules, in that build order, plus the alert scheduler
-(cron jobs reading from the `alert_settings` table already seeded with your
-confirmed timing).
+This system now covers all 9 planned modules: Master Data + Auth, Tender/Bid,
+Sales/Work Order, Purchase, Stores/Inventory, Production, Quality,
+Dispatch/Accounts, and Management/Dashboard — plus Creator-controlled module
+toggling. From here, the natural next steps are: real deployment with your
+actual data, the alert scheduler (cron jobs reading the already-seeded
+`alert_settings` table), and any refinements based on how your team's daily
+use surfaces edge cases.
