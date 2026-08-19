@@ -62,10 +62,12 @@ CREATE TABLE password_reset_tokens (
 );
 
 -- Generic status-history log shared by every module (per architecture doc)
+-- entity_id is VARCHAR because most business entities (work orders, vendor POs,
+-- tender/bid records) use human-readable formatted IDs, not UUIDs.
 CREATE TABLE status_history (
     id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     entity_type   VARCHAR(50) NOT NULL,   -- e.g. 'work_order', 'vendor_po'
-    entity_id     UUID NOT NULL,
+    entity_id     VARCHAR(50) NOT NULL,
     from_status   VARCHAR(50),
     to_status     VARCHAR(50) NOT NULL,
     changed_by    UUID REFERENCES users(id),
@@ -120,6 +122,7 @@ CREATE TABLE parts (
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE SEQUENCE part_id_seq START 1;
+CREATE SEQUENCE tender_order_id_seq START 1;
 
 -- Bill of Materials — self-referencing (a part can be made of sub-parts)
 CREATE TABLE bom_lines (
@@ -336,6 +339,19 @@ CREATE TABLE alert_log (
     sent_to        TEXT[] NOT NULL,
     sent_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- ---------------------------------------------------------------------------
+-- MODULE SETTINGS — Creator-controlled on/off switches (v1 add-on)
+-- ---------------------------------------------------------------------------
+CREATE TABLE module_settings (
+    module      module_name PRIMARY KEY,
+    is_enabled  BOOLEAN NOT NULL DEFAULT true,
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+INSERT INTO module_settings (module) VALUES
+    ('tender_bid'), ('sales'), ('purchase'), ('stores'),
+    ('production'), ('quality'), ('dispatch_accounts'), ('management');
 
 -- ---------------------------------------------------------------------------
 -- TRIGGER: auto-update `updated_at` columns
