@@ -62,6 +62,7 @@ async function main() {
     env.APP_BASE_URL = await ask('Public web address this system will run at', 'http://localhost:4000');
     env.PORT = '4000';
     env.JWT_SECRET = crypto.randomBytes(32).toString('hex'); // generated automatically, never asked
+    env.CREATOR_ACCESS_KEY = crypto.randomBytes(24).toString('base64url'); // the Creator's private key — generated once, never asked, never shown to Superadmin
     env.NODE_ENV = 'production';
 
     const envContent = Object.entries(env).map(([k, v]) => `${k}=${v}`).join('\n');
@@ -100,6 +101,16 @@ set their own password the first time.
 
 A desktop shortcut has been created — double-click it any time to open
 the system in your browser.
+
+--------------------------------------------------------------------
+CREATOR ACCESS (save this somewhere private — it is shown ONLY once
+and cannot be recovered from within the app; Superadmin cannot see it):
+
+  ${env.APP_BASE_URL}/creator-panel/${env.CREATOR_ACCESS_KEY}
+
+This link controls which modules exist in the system, independent of
+any Superadmin or Module Admin account.
+--------------------------------------------------------------------
 `);
 }
 
