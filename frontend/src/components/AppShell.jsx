@@ -1,8 +1,18 @@
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../lib/api';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', module: 'management' },
+  { to: '/tender-bid', label: 'Tender / Bid', module: 'tender_bid' },
+  { to: '/work-orders', label: 'Work Orders', module: 'sales' },
+  { to: '/vendor-pos', label: 'Vendor POs', module: 'purchase' },
+  { to: '/stock', label: 'Stores / Inventory', module: 'stores' },
+  { to: '/production', label: 'Production', module: 'production' },
+  { to: '/quality', label: 'Quality', module: 'quality' },
+  { to: '/dispatch-accounts', label: 'Dispatch / Accounts', module: 'dispatch_accounts' },
+  { to: '/monthly-review', label: 'Monthly Review', module: 'management' },
   { to: '/clients', label: 'Clients', module: null },       // master data — everyone can view
   { to: '/vendors', label: 'Vendors', module: null },
   { to: '/parts', label: 'Parts', module: null },
@@ -12,6 +22,13 @@ const NAV_ITEMS = [
 export default function AppShell() {
   const { user, logout, hasModule } = useAuth();
   const navigate = useNavigate();
+  const [enabledModules, setEnabledModules] = useState(null); // null = still loading
+
+  useEffect(() => {
+    api.get('/enabled-modules').then(({ data }) => {
+      setEnabledModules(new Set(data.filter((m) => m.is_enabled).map((m) => m.module)));
+    }).catch(() => setEnabledModules(new Set())); // fail closed, not open
+  }, []);
 
   function handleLogout() {
     logout();
@@ -30,9 +47,9 @@ export default function AppShell() {
         </div>
 
         <nav className="sidebar-nav">
-          {NAV_ITEMS.filter((item) => {
+          {enabledModules && NAV_ITEMS.filter((item) => {
             if (item.roleOnly) return item.roleOnly.includes(user?.role);
-            if (item.module) return hasModule(item.module);
+            if (item.module) return enabledModules.has(item.module) && hasModule(item.module);
             return true;
           }).map((item) => (
             <NavLink key={item.to} to={item.to} end={item.to === '/'} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>

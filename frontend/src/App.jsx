@@ -9,6 +9,15 @@ import Clients from './pages/master/Clients';
 import Vendors from './pages/master/Vendors';
 import Parts from './pages/master/Parts';
 import Users from './pages/Users';
+import TenderBid from './pages/TenderBid';
+import WorkOrders from './pages/WorkOrders';
+import VendorPOs from './pages/VendorPOs';
+import Stock from './pages/Stock';
+import Production from './pages/Production';
+import Quality from './pages/Quality';
+import DispatchAccounts from './pages/DispatchAccounts';
+import MonthlyReview from './pages/MonthlyReview';
+import CreatorPanel from './pages/CreatorPanel';
 
 function RequireAuth({ children }) {
   const { user } = useAuth();
@@ -22,6 +31,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/creator-panel/:key" element={<CreatorPanel />} />
 
       <Route path="/" element={<RequireAuth><AppShell /></RequireAuth>}>
         <Route index element={<Dashboard />} />
@@ -29,6 +39,14 @@ function AppRoutes() {
         <Route path="vendors" element={<Vendors />} />
         <Route path="parts" element={<Parts />} />
         <Route path="users" element={<Users />} />
+        <Route path="tender-bid" element={<TenderBid />} />
+        <Route path="work-orders" element={<WorkOrders />} />
+        <Route path="vendor-pos" element={<VendorPOs />} />
+        <Route path="stock" element={<Stock />} />
+        <Route path="production" element={<Production />} />
+        <Route path="quality" element={<Quality />} />
+        <Route path="dispatch-accounts" element={<DispatchAccounts />} />
+        <Route path="monthly-review" element={<MonthlyReview />} />
       </Route>
     </Routes>
   );

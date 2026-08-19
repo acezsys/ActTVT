@@ -32,11 +32,11 @@ export default function Login() {
   return (
     <div className="auth-screen">
       <form className="auth-card" onSubmit={handleSubmit}>
-        <h1>ERM - Arieckal Industries</h1>
-        <p className="auth-subtitle">Configured by Prowessz Consulting</p>
+        <h1>Order Management</h1>
+        <p className="auth-subtitle">Arieckal Industries</p>
 
         <label className="field">
-          <span className="field-label">Email id</span>
+          <span className="field-label">Email</span>
           <input className="text-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
         </label>
 
@@ -54,8 +54,7 @@ export default function Login() {
         </button>
 
         <Link to="/forgot-password" className="auth-link">Forgot password?</Link>
-        <Link to="https://www.prowessz.com" className="auth-link">Prowessz Consulting Services LLP</Link>
-        </form>
+      </form>
     </div>
   );
 }
