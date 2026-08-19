@@ -32,8 +32,8 @@ export default function Login() {
   return (
     <div className="auth-screen">
       <form className="auth-card" onSubmit={handleSubmit}>
-        <h1>Order Management</h1>
-        <p className="auth-subtitle">Arieckal Industries</p>
+        <h1>ERM - Arieckal Industries</h1>
+        <p className="auth-subtitle">ERM by Prowessz Consulting</p>
 
         <label className="field">
           <span className="field-label">Email</span>
@@ -54,6 +54,7 @@ export default function Login() {
         </button>
 
         <Link to="/forgot-password" className="auth-link">Forgot password?</Link>
+        <Link to="https://www.prowessz.com" className="auth-link">Prowessz Consulting Services LLP</Link>
       </form>
     </div>
   );
